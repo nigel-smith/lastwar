@@ -5,7 +5,7 @@ function calculate() {
     const targetStar = parseInt(document.getElementById('targetStar').value);
     const targetDot = parseInt(document.getElementById('targetDot').value);
     const userShards = parseInt(document.getElementById('userShards').value) || 0;
-    const trainingLevel = parseInt(document.getElementById('trainingLevel').value) || 0;
+    const hqLevel = parseInt(document.getElementById('trainingLevel').value) || 23; // Swapped to HQ
     const userExp = parseInt(document.getElementById('userExp').value) || 0;
 
     const baseCost = (tier === "UR") ? {2: 5, 3: 10, 4: 20, 5: 30} : {2: 2, 3: 5, 4: 10, 5: 15};
@@ -36,7 +36,8 @@ function calculate() {
         shardStatusEl.className = "font-bold text-rose-400";
     }
 
-    const maxHeroCap = 15 + (trainingLevel * 5);
+    // REAL MECHANIC: Max Hero Level = HQ Level * 5
+    const maxHeroCap = hqLevel * 5;
     document.getElementById('maxBuildingCap').innerText = "Lv " + maxHeroCap;
 
     let predictedLevel = 110; 
@@ -58,7 +59,7 @@ function calculate() {
 
     const alertEl = document.getElementById('calculatorAlert');
     if (predictedLevel >= maxHeroCap) {
-        alertEl.innerText = "⚠️ Level cap ceiling reached! Upgrade your Hero Training Grounds building map level to invest further EXP.";
+        alertEl.innerText = "⚠️ Level cap ceiling reached! Upgrade your Headquarters (HQ) level to unlock higher hero level thresholds.";
         alertEl.className = "p-3 rounded-lg text-xs bg-amber-950/40 border border-amber-500/30 text-amber-300";
     } else if (userShards >= shardsNeeded) {
         alertEl.innerText = "✅ Upgrade plan viable! Star threshold met. Hold deployments safely until Thursday VS initialization.";
