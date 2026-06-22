@@ -1,0 +1,33 @@
+:root {
+    --bg-main: #0b0f19;
+    --bg-card: #131c2e;
+    --border-glow: #1e293b;
+    --accent-gold: #f59e0b;
+}
+
+body { 
+    background-color: var(--bg-main); 
+    color: #f8fafc;
+    scroll-behavior: smooth;
+}
+
+.alliance-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-glow);
+    border-radius: 12px;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.alliance-card:hover {
+    transform: translateY(-2px);
+    border-color: #334155;
+}
+
+.nav-link {
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.nav-link:hover {
+    color: var(--accent-gold);
+    background-color: #1e293b;
+}
