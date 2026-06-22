@@ -3,39 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S1 Alliance Prep Dashboard</title>
+    <title>S1 Alliance Prep Dashboard & Calculator</title>
     <script src="https://tailwindcss.com"></script>
-    <style>
-        /* Custom Modern Dark Theme Stylesheet */
-        :root {
-            --bg-main: #0b0f19;
-            --bg-card: #131c2e;
-            --border-glow: #1e293b;
-            --accent-gold: #f59e0b;
-        }
-        body { 
-            background-color: var(--bg-main); 
-            color: #f8fafc;
-            scroll-behavior: smooth;
-        }
-        .alliance-card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-glow);
-            border-radius: 12px;
-            transition: transform 0.2s ease, border-color 0.2s ease;
-        }
-        .alliance-card:hover {
-            transform: translateY(-2px);
-            border-color: #334155;
-        }
-        .nav-link {
-            transition: color 0.2s ease, background-color 0.2s ease;
-        }
-        .nav-link:hover {
-            color: var(--accent-gold);
-            background-color: #1e293b;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="font-sans antialiased pb-12 pt-16">
 
@@ -44,10 +14,10 @@
         <div class="max-w-4xl mx-auto flex justify-between items-center text-xs font-semibold uppercase tracking-wider">
             <a href="#" class="text-amber-500 font-bold text-sm">🛡️ Tank Guide</a>
             <div class="flex gap-1 md:gap-3">
+                <a href="#calculator" class="text-amber-400 bg-amber-950/40 px-2 py-1 rounded border border-amber-500/20">🔮 S1 Calculator</a>
                 <a href="#timeline" class="nav-link text-slate-300 px-2 py-1 rounded">Timeline</a>
                 <a href="#squad" class="nav-link text-slate-300 px-2 py-1 rounded">Squad</a>
                 <a href="#tech" class="nav-link text-slate-300 px-2 py-1 rounded">Tech</a>
-                <a href="#stores" class="nav-link text-slate-300 px-2 py-1 rounded">Stores</a>
             </div>
         </div>
     </nav>
@@ -68,13 +38,127 @@
         </div>
     </header>
 
-    <!-- Main Content Grid -->
+    <!-- Interactive Calculator Section -->
+    <section id="calculator" class="max-w-4xl mx-auto px-4 mb-8">
+        <div class="alliance-card p-6 shadow-2xl border-amber-500/20">
+            <h2 class="text-xl font-bold text-amber-400 border-b border-slate-800 pb-3 mb-6 flex items-center gap-2">
+                🔮 Interactive Hero Predictive Calculator
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Left Input Panel -->
+                <div class="space-y-4 bg-slate-950/50 p-4 rounded-xl border border-slate-800">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Hero Tier</label>
+                        <select id="heroTier" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-sm text-slate-200" onchange="calculate()">
+                            <option value="UR">UR (Gold) Hero</option>
+                            <option value="SSR">SSR (Purple) Hero</option>
+                        </select>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Current Star</label>
+                            <select id="currStar" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-sm text-slate-200" onchange="calculate()">
+                                <option value="2">2 Stars</option>
+                                <option value="3" selected>3 Stars</option>
+                                <option value="4">4 Stars</option>
+                                <option value="5">5 Stars</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Sub-Tier (Dots)</label>
+                            <select id="currDot" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-sm text-slate-200" onchange="calculate()">
+                                <option value="0">.0</option>
+                                <option value="1">.1</option>
+                                <option value="2">.2</option>
+                                <option value="3" selected>.3</option>
+                                <option value="4">.4</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Target Star</label>
+                            <select id="targetStar" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-sm text-slate-200" onchange="calculate()">
+                                <option value="3">3 Stars</option>
+                                <option value="4" selected>4 Stars</option>
+                                <option value="5">5 Stars</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Target Sub-Tier</label>
+                            <select id="targetDot" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-sm text-slate-200" onchange="calculate()">
+                                <option value="0" selected>.0</option>
+                                <option value="1">.1</option>
+                                <option value="2">.2</option>
+                                <option value="3">.3</option>
+                                <option value="4">.4</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-slate-800 pt-3">
+                        <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Your Stockpiled Shards</label>
+                        <input type="number" id="userShards" value="111" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-sm font-mono text-amber-400" oninput="calculate()">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Training Grounds Lv</label>
+                            <input type="number" id="trainingLevel" value="22" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-sm text-slate-200" oninput="calculate()">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-400 mb-1">Your EXP (Millions)</label>
+                            <input type="number" id="userExp" value="1450" class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-sm text-slate-200 font-mono" oninput="calculate()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Live Output Panel -->
+                <div class="flex flex-col justify-between space-y-4 p-4 bg-slate-900 rounded-xl border border-slate-800">
+                    <div>
+                        <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3">Star Upgrade Analysis</h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">Total Shards Required:</span>
+                                <span id="shardsRequired" class="font-bold text-slate-200 font-mono">0</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">Inventory Status:</span>
+                                <span id="shardStatus" class="font-bold">Calculating...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-slate-800 pt-3">
+                        <h3 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-3">Level Cap Forecast</h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">Max Cap Allowed by Base:</span>
+                                <span id="maxBuildingCap" class="font-bold text-cyan-400 font-mono">Lv 110</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-slate-400">Predicted Level via EXP:</span>
+                                <span id="predictedLevel" class="font-bold text-emerald-400 font-mono">Lv --</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="calculatorAlert" class="p-3 rounded-lg text-xs bg-slate-950 border border-slate-800 text-slate-400">
+                        Adjust data items dynamically to check resource feasibility.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content Layout Section -->
     <main class="max-w-4xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
         
-        <!-- Left Column: Timelines and Squad Setup -->
+        <!-- Left Side Information Blocks -->
         <div class="md:col-span-2 space-y-6">
-            
-            <!-- Tactical Schedule Card -->
             <section id="timeline" class="alliance-card p-6 shadow-xl">
                 <h2 class="text-lg font-bold text-amber-400 border-b border-slate-800 pb-3 mb-4 flex items-center gap-2">
                     📅 Critical Timeline
@@ -100,7 +184,6 @@
                 </div>
             </section>
 
-            <!-- Combat & Gear Settings Card -->
             <section id="squad" class="alliance-card p-6 shadow-xl">
                 <h2 class="text-lg font-bold text-amber-400 border-b border-slate-800 pb-3 mb-4 flex items-center gap-2">
                     ⚔️ Main Tank Squad Setup (5M+ Power)
@@ -117,16 +200,10 @@
                         <span class="text-xs text-slate-500 block mt-2">Priority: Push Kimberly's M5 Railgun to Lv 40. Craft next M5 weapon for Mason.</span>
                     </div>
                 </div>
-                <div class="mt-4 bg-slate-950 p-3 rounded-lg border border-slate-800 text-xs text-slate-400">
-                    <strong>Drone Component Settings (Lv 52):</strong> Move your 3x Level 6 components exclusively to the <strong>left side</strong> (Attack/Crit) to compound Kimberly's massive damage output. Leftover Level 5s go on the right side.
-                </div>
             </section>
         </div>
-
-        <!-- Right Column: Tech Matrices and Stores -->
+        <!-- Right Side Tech Configurations -->
         <div class="space-y-6">
-            
-            <!-- Tech Queue Card -->
             <section id="tech" class="alliance-card p-6 shadow-xl">
                 <h2 class="text-md font-bold text-amber-400 border-b border-slate-800 pb-2 mb-3 flex items-center gap-2">
                     🧬 Tech Matrix (1 Slot)
@@ -146,7 +223,6 @@
                 </ul>
             </section>
 
-            <!-- Store Shopping Card -->
             <section id="stores" class="alliance-card p-6 shadow-xl">
                 <h2 class="text-md font-bold text-amber-400 border-b border-slate-800 pb-2 mb-3 flex items-center gap-2">
                     🪙 Inventory & Store Guide
@@ -160,12 +236,31 @@
                         <span class="font-bold text-purple-400 block">Campaign Credits (4k+)</span>
                         <p class="text-slate-300">Clear out Universal UR Shards and Level 3 Drone Component Chests.</p>
                     </div>
-                    <div class="border-b border-slate-800 pb-2">
-                        <span class="font-bold text-yellow-500 block">Honor Points (70k)</span>
-                        <p class="text-slate-300">Buy Legendary Gear Blueprints for Murphy's frontline armor upgrades.</p>
-                    </div>
                     <div>
                         <span class="font-bold text-cyan-400 block">Diamonds (30k Pool)</span>
-                        <p class="text-slate-300">Buy the weekly VIP 30-Day Pass to lock speed buffs; save 20k buffer for S1.</p>
+                        <p class="text-slate-300">Buy weekly VIP 30-Day Pass to lock speed buffs; save 20k buffer for S1.</p>
                     </div>
                 </div>
+            </section>
+        </div>
+    </main>
+    <!-- Strategy Footer -->
+    <section class="max-w-4xl mx-auto px-4 mt-6">
+        <div class="alliance-card p-6 shadow-xl">
+            <h2 class="text-md font-bold text-amber-400 border-b border-slate-800 pb-2 mb-3">
+                📣 Alliance Strategy Note: The Hoarding Protocol
+            </h2>
+            <p class="text-sm text-slate-300 leading-relaxed">
+                As a free-to-play or low-spending player base, the key to surviving the Season 1 Crimson Plague is <strong>discipline</strong>. Never spend shards, tickets, or large EXP stashes on random days. By holding all resources for <strong>VS Day 4 (Thursday)</strong>, we unlock maximum tier alliance rewards.
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer Copyright Marker -->
+    <footer class="max-w-4xl mx-auto px-4 mt-8 pt-4 border-t border-slate-800 text-center text-xs text-slate-500">
+        Active Server Day: 127+ | Optimized for Free-to-Play Tank Engineers
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
