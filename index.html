@@ -6,17 +6,58 @@
     <title>S1 Alliance Prep Dashboard</title>
     <script src="https://tailwindcss.com"></script>
     <style>
-        body { background-color: #0f172a; color: #f8fafc; }
+        /* Custom Modern Dark Theme Stylesheet */
+        :root {
+            --bg-main: #0b0f19;
+            --bg-card: #131c2e;
+            --border-glow: #1e293b;
+            --accent-gold: #f59e0b;
+        }
+        body { 
+            background-color: var(--bg-main); 
+            color: #f8fafc;
+            scroll-behavior: smooth;
+        }
+        .alliance-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 12px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        .alliance-card:hover {
+            transform: translateY(-2px);
+            border-color: #334155;
+        }
+        .nav-link {
+            transition: color 0.2s ease, background-color 0.2s ease;
+        }
+        .nav-link:hover {
+            color: var(--accent-gold);
+            background-color: #1e293b;
+        }
     </style>
 </head>
-<body class="font-sans antialiased pb-12">
+<body class="font-sans antialiased pb-12 pt-16">
+
+    <!-- Sticky Top Menu -->
+    <nav class="fixed top-0 left-0 right-0 bg-slate-950 border-b border-slate-800 z-50 px-4 py-2">
+        <div class="max-w-4xl mx-auto flex justify-between items-center text-xs font-semibold uppercase tracking-wider">
+            <a href="#" class="text-amber-500 font-bold text-sm">🛡️ Tank Guide</a>
+            <div class="flex gap-1 md:gap-3">
+                <a href="#timeline" class="nav-link text-slate-300 px-2 py-1 rounded">Timeline</a>
+                <a href="#squad" class="nav-link text-slate-300 px-2 py-1 rounded">Squad</a>
+                <a href="#tech" class="nav-link text-slate-300 px-2 py-1 rounded">Tech</a>
+                <a href="#stores" class="nav-link text-slate-300 px-2 py-1 rounded">Stores</a>
+            </div>
+        </div>
+    </nav>
 
     <!-- Header Banner -->
-    <header class="bg-slate-900 border-b border-slate-800 py-6 px-4 mb-8">
+    <header class="bg-slate-900 border-b border-slate-800 py-6 px-4 mb-8 mt-4">
         <div class="max-w-4xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
             <div>
                 <h1 class="text-2xl font-bold text-amber-500 flex items-center gap-2">
-                    🛡️ Season 1 Alliance Prep Guide
+                    Season 1 Alliance Prep Guide
                 </h1>
                 <p class="text-sm text-slate-400">Current Mode: <span class="text-amber-400 font-semibold">💎 Passive Resource Gathering & Tech Optimization Phase</span></p>
             </div>
@@ -33,8 +74,8 @@
         <!-- Left Column: Timelines and Squad Setup -->
         <div class="md:col-span-2 space-y-6">
             
-            <!-- Tactical Schedule Timeline -->
-            <section class="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl">
+            <!-- Tactical Schedule Card -->
+            <section id="timeline" class="alliance-card p-6 shadow-xl">
                 <h2 class="text-lg font-bold text-amber-400 border-b border-slate-800 pb-3 mb-4 flex items-center gap-2">
                     📅 Critical Timeline
                 </h2>
@@ -59,18 +100,18 @@
                 </div>
             </section>
 
-            <!-- Combat & Gear Settings -->
-            <section class="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl">
+            <!-- Combat & Gear Settings Card -->
+            <section id="squad" class="alliance-card p-6 shadow-xl">
                 <h2 class="text-lg font-bold text-amber-400 border-b border-slate-800 pb-3 mb-4 flex items-center gap-2">
                     ⚔️ Main Tank Squad Setup (5M+ Power)
                 </h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-                    <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-800">
+                    <div class="bg-slate-800/30 p-3 rounded-lg border border-slate-800">
                         <span class="font-bold text-red-400 block mb-1">🛡️ Front Row (Defenders)</span>
                         <p class="text-slate-300">Murphy (Lv 100) & Scarlett</p>
                         <span class="text-xs text-slate-500 block mt-2">Priority: Level up Murphy's defensive M4/M5 gear. Keep his weapon static.</span>
                     </div>
-                    <div class="bg-slate-800/50 p-3 rounded-lg border border-slate-800">
+                    <div class="bg-slate-800/30 p-3 rounded-lg border border-slate-800">
                         <span class="font-bold text-emerald-400 block mb-1">💥 Back Row (DPS / Buffs)</span>
                         <p class="text-slate-300">Kimberly (Lv 110), Marshall, Mason</p>
                         <span class="text-xs text-slate-500 block mt-2">Priority: Push Kimberly's M5 Railgun to Lv 40. Craft next M5 weapon for Mason.</span>
@@ -85,8 +126,8 @@
         <!-- Right Column: Tech Matrices and Stores -->
         <div class="space-y-6">
             
-            <!-- Tech Queue Priority -->
-            <section class="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl">
+            <!-- Tech Queue Card -->
+            <section id="tech" class="alliance-card p-6 shadow-xl">
                 <h2 class="text-md font-bold text-amber-400 border-b border-slate-800 pb-2 mb-3 flex items-center gap-2">
                     🧬 Tech Matrix (1 Slot)
                 </h2>
@@ -105,49 +146,26 @@
                 </ul>
             </section>
 
-            <!-- Store Shopping Matrix -->
-            <section class="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl">
+            <!-- Store Shopping Card -->
+            <section id="stores" class="alliance-card p-6 shadow-xl">
                 <h2 class="text-md font-bold text-amber-400 border-b border-slate-800 pb-2 mb-3 flex items-center gap-2">
                     🪙 Inventory & Store Guide
                 </h2>
                 <div class="space-y-3 text-xs">
-                    <div>
+                    <div class="border-b border-slate-800 pb-2">
                         <span class="font-bold text-slate-400 block">Alliance Store (560k Shields)</span>
-                        <p class="text-slate-300">Hoard Advanced Teleporters and 24H Peace Shields for Season 1 cross-server map defense.</p>
+                        <p class="text-slate-300">Hoard Advanced Teleporters and 24H Peace Shields for Season 1 map defense.</p>
                     </div>
-                    <div>
+                    <div class="border-b border-slate-800 pb-2">
                         <span class="font-bold text-purple-400 block">Campaign Credits (4k+)</span>
-                        <p class="text-slate-300">Clear out Universal UR Shards and Level 3 Drone Component Chests to feed your main march.</p>
+                        <p class="text-slate-300">Clear out Universal UR Shards and Level 3 Drone Component Chests.</p>
                     </div>
-                    <div>
+                    <div class="border-b border-slate-800 pb-2">
                         <span class="font-bold text-yellow-500 block">Honor Points (70k)</span>
-                        <p class="text-slate-300">Buy Legendary Gear Blueprints for Murphy's frontline armor upgrades. Avoid spending on ore.</p>
+                        <p class="text-slate-300">Buy Legendary Gear Blueprints for Murphy's frontline armor upgrades.</p>
                     </div>
                     <div>
                         <span class="font-bold text-cyan-400 block">Diamonds (30k Pool)</span>
-                        <p class="text-slate-300">Buy the weekly VIP 30-Day Activate Pass to lock in your VIP 8 speed buffs; keep 20k buffer for S1 factories.</p>
+                        <p class="text-slate-300">Buy the weekly VIP 30-Day Pass to lock speed buffs; save 20k buffer for S1.</p>
                     </div>
                 </div>
-            </section>
-        </div>
-    </main>
-
-    <!-- Alliance Strategy Note Section -->
-    <section class="max-w-4xl mx-auto px-4 mt-6">
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 shadow-xl">
-            <h2 class="text-md font-bold text-amber-400 border-b border-slate-800 pb-2 mb-3">
-                📣 Alliance Strategy Note: The Hoarding Protocol
-            </h2>
-            <p class="text-sm text-slate-300 leading-relaxed">
-                As a free-to-play or low-spending player base, the key to surviving the Season 1 Crimson Plague is <strong>discipline</strong>. Never spend shards, tickets, or large EXP stashes on random days. By holding all resources for <strong>VS Day 4 (Thursday)</strong>, we unlock the maximum tier 9 alliance chests, returning millions in gold, speedups, and components back to the guild. Focus 100% on a single squad archetype (Tanks) and let your tech multipliers do the heavy lifting!
-            </p>
-        </div>
-    </section>
-
-    <!-- Footer Disclaimer -->
-    <footer class="max-w-4xl mx-auto px-4 mt-8 pt-4 border-t border-slate-800 text-center text-xs text-slate-500">
-        Active Server Day: 127+ | Optimized for Free-to-Play Tank Engineers
-    </footer>
-
-</body>
-</html>
